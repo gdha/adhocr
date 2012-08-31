@@ -1,0 +1,105 @@
+:lang: en
+:doctype: manpage
+
+= ADHOCR(8)
+
+== NAME
+adhocr - Ad-hoc Copy and Run
+
+== SYNOPSIS
+*adhocr* [*-k*] [*-p* _#threads_] [*-u* _username_][ _ARGS_...] _COMMAND_ 
+
+
+== DESCRIPTION
+Adhocr is a tool which allows you to execute, on multiple systems simultanously, commands and collect the output in a central way. It can also execute commands on remote systems as root with sudo (this requires your password and you being granted to run sudo in the first place). Adhocr makes use of Secure Shell and expect.
+
+== OPTIONS
+
+
+=== GLOBAL ARGUMENTS
+
+-p #threads::
+	Maximum number of concurrent processes running (in the background)
+	[optional - default is 10]
+
+-u <username>::
+        The user <username> should be granted executing rights in /etc/sudoers
+        [optional - default is $USER]
+
+-k::
+        keep the log directory with individual log files per system
+        [optional - default is remove]
+
+-f <filename>::
+        Filename containing list of systems to process [*required*]
+
+-l <logdir>::
+        Directory to keep the logs
+        [optional - default ~/logs]
+
+-o <outputdir>::
+        Directory to store output
+        [optional - default ~/output]
+
+-sudo::
+        Force remote commands to be executed via sudo
+        [optional - default NO]
+
+-x|-expect::
+        Use SSH with expect to login remotely (e.g. no SSH keys were exchanged)
+        [optional - default *YES*]
+
+-npw|-nx|-bg::
+        Use only SSH (without expect) to execute remote commands
+        [optional - default NO]
+
+-t <seconds>::
+        timeout in seconds [optional - default 900]
+
+-h::
+        Show extended usage (this screen)
+
+=== COMMANDS
+
+-up::
+        Upload documents with SCP (using expect [-x] or without expect [-nx])
+        [optional - default NO]
+
+-dl::
+        Download documents with SCP (default with expect, use -nx to use scp only)
+
+
+-c "command (; commands)"::
+        Commands to execute on remote system(s), e.g. "uname -r" [*required*]
+	+
+        Note 1: upload file (-up) commands are "local-file remote-file"
+	+
+        Note 2: download file (-dl) commands are "remote-file local-file"
+
+== EXAMPLES
+
+`adhocr -p 20 -f systems/my-hosts -t 30 -c "uname -r"`::
+	Run adhocr on all systems listed in the file _systems/my-hosts_ with a maximum of 20 parallel threads
+	and use a time-out of 30 seconds (to kill hanging processes if any). Adhocr will use by default expect
+	and will ask for your (Active Directory) password. The remote command _uname -r_ will not be executed
+	with sudo (is by default off).
+
+`adhocr -f systems/hpux-hosts -t 20 -sudo -c "[[ -x /usr/sbin/cmviewcl ]] && /usr/sbin/cmviewcl"`::
+	Use adhocr to query your HP-UX systems, using expect and sudo to root, about the Serviveguard cluster
+	overview (if any). Your password will be asked (as _sudo_ implies this).
+
+`adhocr -u wendy -t 30 -p 30 -f systems/Dev-Systems -c "xpinfo -v"`::
+	Run adhocr as user _wendy_ and by default prompt for a password. The _-p_ option allows to start
+	maximum 30 sessions in parallel.
+
+== SEE ALSO
+sudo(8) expect(1)
+
+== BUGS
+Report bugs or missing features at https://github.com/gdha/adhocr/issues
+
+== SOURCE
+The source code is available at https://github.com/gdha/adhocr
+
+== AUTHOR
+Gratien D'haese (gratien.dhaese at gmail.com)

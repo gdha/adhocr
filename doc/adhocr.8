@@ -1,0 +1,153 @@
+'\" t
+.\"     Title: adhocr
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 08/31/2012
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "ADHOCR" "8" "08/31/2012" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+adhocr \- Ad\-hoc Copy and Run
+.SH "SYNOPSIS"
+.sp
+\fBadhocr\fR [\fB\-k\fR] [\fB\-p\fR \fI#threads\fR] [\fB\-u\fR \fIusername\fR][ \fIARGS\fR\&...] \fICOMMAND\fR
+.SH "DESCRIPTION"
+.sp
+Adhocr is a tool which allows you to execute, on multiple systems simultanously, commands and collect the output in a central way\&. It can also execute commands on remote systems as root with sudo (this requires your password and you being granted to run sudo in the first place)\&. Adhocr makes use of Secure Shell and expect\&.
+.SH "OPTIONS"
+.SS "GLOBAL ARGUMENTS"
+.PP
+\-p #threads
+.RS 4
+Maximum number of concurrent processes running (in the background) [optional \- default is 10]
+.RE
+.PP
+\-u <username>
+.RS 4
+The user <username> should be granted executing rights in /etc/sudoers [optional \- default is $USER]
+.RE
+.PP
+\-k
+.RS 4
+keep the log directory with individual log files per system [optional \- default is remove]
+.RE
+.PP
+\-f <filename>
+.RS 4
+Filename containing list of systems to process [\fBrequired\fR]
+.RE
+.PP
+\-l <logdir>
+.RS 4
+Directory to keep the logs [optional \- default ~/logs]
+.RE
+.PP
+\-o <outputdir>
+.RS 4
+Directory to store output [optional \- default ~/output]
+.RE
+.PP
+\-sudo
+.RS 4
+Force remote commands to be executed via sudo [optional \- default NO]
+.RE
+.PP
+\-x|\-expect
+.RS 4
+Use SSH with expect to login remotely (e\&.g\&. no SSH keys were exchanged) [optional \- default
+\fBYES\fR]
+.RE
+.PP
+\-npw|\-nx|\-bg
+.RS 4
+Use only SSH (without expect) to execute remote commands [optional \- default NO]
+.RE
+.PP
+\-t <seconds>
+.RS 4
+timeout in seconds [optional \- default 900]
+.RE
+.PP
+\-h
+.RS 4
+Show extended usage (this screen)
+.RE
+.SS "COMMANDS"
+.PP
+\-up
+.RS 4
+Upload documents with SCP (using expect [\-x] or without expect [\-nx]) [optional \- default NO]
+.RE
+.PP
+\-dl
+.RS 4
+Download documents with SCP (default with expect, use \-nx to use scp only)
+.RE
+.PP
+\-c "command (; commands)"
+.RS 4
+Commands to execute on remote system(s), e\&.g\&. "uname \-r" [\fBrequired\fR]
+
+Note 1: upload file (\-up) commands are "local\-file remote\-file"
+
+Note 2: download file (\-dl) commands are "remote\-file local\-file"
+.RE
+.SH "EXAMPLES"
+.PP
+adhocr \-p 20 \-f systems/my\-hosts \-t 30 \-c "uname \-r"
+.RS 4
+Run adhocr on all systems listed in the file
+\fIsystems/my\-hosts\fR
+with a maximum of 20 parallel threads and use a time\-out of 30 seconds (to kill hanging processes if any)\&. Adhocr will use by default expect and will ask for your (Active Directory) password\&. The remote command
+\fIuname \-r\fR
+will not be executed with sudo (is by default off)\&.
+.RE
+.PP
+adhocr \-f systems/hpux\-hosts \-t 20 \-sudo \-c "[[ \-x /usr/sbin/cmviewcl ]] && /usr/sbin/cmviewcl"
+.RS 4
+Use adhocr to query your HP\-UX systems, using expect and sudo to root, about the Serviveguard cluster overview (if any)\&. Your password will be asked (as
+\fIsudo\fR
+implies this)\&.
+.RE
+.PP
+adhocr \-u wendy \-t 30 \-p 30 \-f systems/Dev\-Systems \-c "xpinfo \-v"
+.RS 4
+Run adhocr as user
+\fIwendy\fR
+and by default prompt for a password\&. The
+\fI\-p\fR
+option allows to start maximum 30 sessions in parallel\&.
+.RE
+.SH "SEE ALSO"
+.sp
+sudo(8) expect(1)
+.SH "BUGS"
+.sp
+Report bugs or missing features at \m[blue]\fBhttps://github\&.com/gdha/adhocr/issues\fR\m[]
+.SH "SOURCE"
+.sp
+The source code is available at \m[blue]\fBhttps://github\&.com/gdha/adhocr\fR\m[]
+.SH "AUTHOR"
+.sp
+Gratien D\(cqhaese (gratien\&.dhaese at gmail\&.com)

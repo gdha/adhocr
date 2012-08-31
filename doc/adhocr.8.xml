@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<refentry lang="en">
+<refmeta>
+<refentrytitle>adhocr</refentrytitle>
+<manvolnum>8</manvolnum>
+</refmeta>
+<refnamediv>
+    <refname>adhocr</refname>
+    <refpurpose>Ad-hoc Copy and Run</refpurpose>
+</refnamediv>
+<refsynopsisdiv id="_synopsis">
+<simpara><emphasis role="strong">adhocr</emphasis> [<emphasis role="strong">-k</emphasis>] [<emphasis role="strong">-p</emphasis> <emphasis>#threads</emphasis>] [<emphasis role="strong">-u</emphasis> <emphasis>username</emphasis>][ <emphasis>ARGS</emphasis>&#8230;] <emphasis>COMMAND</emphasis></simpara>
+</refsynopsisdiv>
+<refsect1 id="_description">
+<title>DESCRIPTION</title>
+<simpara>Adhocr is a tool which allows you to execute, on multiple systems simultanously, commands and collect the output in a central way. It can also execute commands on remote systems as root with sudo (this requires your password and you being granted to run sudo in the first place). Adhocr makes use of Secure Shell and expect.</simpara>
+</refsect1>
+<refsect1 id="_options">
+<title>OPTIONS</title>
+<refsect2 id="_global_arguments">
+<title>GLOBAL ARGUMENTS</title>
+<variablelist>
+<varlistentry>
+<term>
+-p #threads
+</term>
+<listitem>
+<simpara>
+        Maximum number of concurrent processes running (in the background)
+        [optional - default is 10]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-u &lt;username&gt;
+</term>
+<listitem>
+<simpara>
+        The user &lt;username&gt; should be granted executing rights in /etc/sudoers
+        [optional - default is $USER]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-k
+</term>
+<listitem>
+<simpara>
+        keep the log directory with individual log files per system
+        [optional - default is remove]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-f &lt;filename&gt;
+</term>
+<listitem>
+<simpara>
+        Filename containing list of systems to process [<emphasis role="strong">required</emphasis>]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-l &lt;logdir&gt;
+</term>
+<listitem>
+<simpara>
+        Directory to keep the logs
+        [optional - default ~/logs]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-o &lt;outputdir&gt;
+</term>
+<listitem>
+<simpara>
+        Directory to store output
+        [optional - default ~/output]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-sudo
+</term>
+<listitem>
+<simpara>
+        Force remote commands to be executed via sudo
+        [optional - default NO]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-x|-expect
+</term>
+<listitem>
+<simpara>
+        Use SSH with expect to login remotely (e.g. no SSH keys were exchanged)
+        [optional - default <emphasis role="strong">YES</emphasis>]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-npw|-nx|-bg
+</term>
+<listitem>
+<simpara>
+        Use only SSH (without expect) to execute remote commands
+        [optional - default NO]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-t &lt;seconds&gt;
+</term>
+<listitem>
+<simpara>
+        timeout in seconds [optional - default 900]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-h
+</term>
+<listitem>
+<simpara>
+        Show extended usage (this screen)
+</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+<refsect2 id="_commands">
+<title>COMMANDS</title>
+<variablelist>
+<varlistentry>
+<term>
+-up
+</term>
+<listitem>
+<simpara>
+        Upload documents with SCP (using expect [-x] or without expect [-nx])
+        [optional - default NO]
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-dl
+</term>
+<listitem>
+<simpara>
+        Download documents with SCP (default with expect, use -nx to use scp only)
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+-c "command (; commands)"
+</term>
+<listitem>
+<simpara>
+        Commands to execute on remote system(s), e.g. "uname -r" [<emphasis role="strong">required</emphasis>]
+       <?asciidoc-br?>
+        Note 1: upload file (-up) commands are "local-file remote-file"
+       <?asciidoc-br?>
+        Note 2: download file (-dl) commands are "remote-file local-file"
+</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+</refsect1>
+<refsect1 id="_examples">
+<title>EXAMPLES</title>
+<variablelist>
+<varlistentry>
+<term>
+<literal>adhocr -p 20 -f systems/my-hosts -t 30 -c "uname -r"</literal>
+</term>
+<listitem>
+<simpara>
+        Run adhocr on all systems listed in the file <emphasis>systems/my-hosts</emphasis> with a maximum of 20 parallel threads
+        and use a time-out of 30 seconds (to kill hanging processes if any). Adhocr will use by default expect
+        and will ask for your (Active Directory) password. The remote command <emphasis>uname -r</emphasis> will not be executed
+        with sudo (is by default off).
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<literal>adhocr -f systems/hpux-hosts -t 20 -sudo -c "[[ -x /usr/sbin/cmviewcl ]] &amp;&amp; /usr/sbin/cmviewcl"</literal>
+</term>
+<listitem>
+<simpara>
+        Use adhocr to query your HP-UX systems, using expect and sudo to root, about the Serviveguard cluster
+        overview (if any). Your password will be asked (as <emphasis>sudo</emphasis> implies this).
+</simpara>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>
+<literal>adhocr -u wendy -t 30 -p 30 -f systems/Dev-Systems -c "xpinfo -v"</literal>
+</term>
+<listitem>
+<simpara>
+        Run adhocr as user <emphasis>wendy</emphasis> and by default prompt for a password. The <emphasis>-p</emphasis> option allows to start
+        maximum 30 sessions in parallel.
+</simpara>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+<refsect1 id="_see_also">
+<title>SEE ALSO</title>
+<simpara>sudo(8) expect(1)</simpara>
+</refsect1>
+<refsect1 id="_bugs">
+<title>BUGS</title>
+<simpara>Report bugs or missing features at <ulink url="https://github.com/gdha/adhocr/issues">https://github.com/gdha/adhocr/issues</ulink></simpara>
+</refsect1>
+<refsect1 id="_source">
+<title>SOURCE</title>
+<simpara>The source code is available at <ulink url="https://github.com/gdha/adhocr">https://github.com/gdha/adhocr</ulink></simpara>
+</refsect1>
+<refsect1 id="_author">
+<title>AUTHOR</title>
+<simpara>Gratien D&#8217;haese (gratien.dhaese at gmail.com)</simpara>
+</refsect1>
+</refentry>

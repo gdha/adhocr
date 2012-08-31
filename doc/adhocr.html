@@ -1,0 +1,619 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.4.5" />
+<title>Ad-hoc Copy and Run (adhocr)</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revnumber, span#revdate, span#revremark {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+</head>
+<body>
+<div id="header">
+<h1>Ad-hoc Copy and Run (adhocr)</h1>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>In large company environments they use a central directory systems to authenticate users against when users login onto a Linux/Unix or Windows box. Most likely the central directory service will be based on LDAP or Active Directory (of Microsoft). On the Unix boxes there is then a client install that communicates with this central directory service. It is mainly in such environments that <strong>adhocr</strong> is an useful and powerful tool.</p></div>
+</div>
+</div>
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This document provides guidance to the usage of the ad-hoc copy and run command (abbreviated as adhocr). Adhocr command was written on special request during the Storage HLM move to have a quick status of HBA&#8217;s before and just after the move. Using a central controlled scheduling system was for these purposes not adequate as timing was of essence.
+On occasions we were asked to write shell scripts to gather information on a bunch of systems, but the information is only needed during a short period of time, e.g. during a migration period. Writing and controlling this via a scheduling system may be overkill for these minor tasks, but still running these scripts on some systems may take too much time to be joyful. Well, for these kind of tasks adhocr may come to rescue as it was designed to be fast and simple to handle these collections, but still secure enough to pass rules around SOX compliancy and/or FDA regulation rules.</p></div>
+</div>
+<h2 id="_guideline">Guideline</h2>
+<div class="sectionbody">
+<h3 id="_software_pre_requisites">Software Pre-Requisites</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The adhocr command was written entirely in Korn Shell (and is 100% Bash compatible) shell and is therefore, rather portable on all UNIX systems that have either the Korn or Bash shell installed.
+The adhocr command makes intensive use of the expect command and therefore, we need some additional software on the following Operating Systems to make adhocr functional:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+HP-UX 11.11, 11.23 or 11.31: use <a href="http://hpux.connect.org.uk/">http://hpux.connect.org.uk/</a> to download the latest version of:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+expect
+</p>
+</li>
+<li>
+<p>
+tcltk
+</p>
+</li>
+<li>
+<p>
+expat
+</p>
+</li>
+<li>
+<p>
+fontconfig
+</p>
+</li>
+<li>
+<p>
+freetype
+</p>
+</li>
+<li>
+<p>
+gettext
+</p>
+</li>
+<li>
+<p>
+libXft
+</p>
+</li>
+<li>
+<p>
+libXrender
+</p>
+</li>
+<li>
+<p>
+libiconv
+</p>
+</li>
+<li>
+<p>
+zlib
+</p>
+</li>
+<li>
+<p>
+You could also use <em><strong>depothelper</strong></em> tool to download and install all dependencies automagically.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Linux (SLES 10.*, SLES 11.*, RHEL 4.*, RHEL 5.*, RHEL 6.*, Debian):
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+korn shell (ksh)
+</p>
+</li>
+<li>
+<p>
+expect
+</p>
+</li>
+<li>
+<p>
+tcltk
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>For example, on Linux, using rpm to install the adhocr package will result in the following messages if the software dependencies were not met:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt># rpm -ivh adhocr-1.4-1.fc17.i686.rpm
+error: Failed dependencies:
+        expect is needed by adhocr-1.4-1.fc17.i686
+        ksh is needed by adhocr-1.4-1.fc17.i686</tt></pre>
+</div></div>
+<h3 id="_hardware_pre_requisites">Hardware Pre-Requisites</h3><div style="clear:left"></div>
+<div class="paragraph"><p>There are no hardware pre-requisites enforced by the adhocr command.</p></div>
+<h3 id="_security_considerations">Security Considerations</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The adhocr command uses the Secure Shell or Secure Copy commands in the background in combination with the expect program to deal with the user interaction in a semi-automatic way. Therefore, the communication between the adhocr command the destination UNIX system is encrypted and passwords are never send in clear text. The user has to enter his/her password in the user.s own local pseudo-TTY, and the authentication is done with the regional Active Directory-domain server. Passwords are never visible on the screen and a double check has been build into adhocr program to scan on (own) passwords before storing the log files on disks.
+The <em>root</em> user is prohibited to execute (as root) the adhocr program to perform sudo-alike commands as <em>root</em> is not part of the Unix engineers (<em>se</em>) group itself.</p></div>
+<div class="paragraph"><p>However, we would advise to limit the amount of servers where adhocr can run on to have a better way to control the (central) logging of the adhocr runs.</p></div>
+<h3 id="_expect_takes_care_of_user_interaction">Expect takes care of user interaction</h3><div style="clear:left"></div>
+<div class="paragraph"><p>When dealing with user interaction, such as entering passwords, then the normal UNIX shell fall short when for example we would like to run commands in the background. This limitation (user interaction) is as old as the UNIX operating system, but it was only in 1990 that an extension to the TCL language was written by Don Libes of NIST to deal with user interaction and that program was called <tt>expect</tt>.</p></div>
+<h3 id="_adhocr_usage">Adhocr usage</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The best way to see what minimal required options are with the <tt>adhocr</tt> command is by running it without any option at all:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ adhocr
+
+*************************************************
+       adhocr : Ad-hoc Copy and Run
+                version 1.4
+*************************************************
+
+Usage: adhocr [-p #max-processes] [-u username] [-k] -f filename-containing-systems [-h] -c "commands to execute"
+        -p maximum number of concurrent processes running (in the background) [optional - default is 10]
+        -u The user "username" should be part of the "se" group for executing sudo [default is gdha]
+        -k keep the log directory with individual log files per system [optional - default is remove]
+        -f filename containing list of systems to process
+        -h show extended usage
+        -c "command(s) to execute on remote systems"</tt></pre>
+</div></div>
+<div class="paragraph"><p>From above output we can tell that there are 2 required options, the <tt>-f</tt> option, which is a file containing fully qualified domain names of the systems we want to retrieve information of. And, the second required option is the <tt>-c</tt> option, which contains the command to execute on the remote systems.</p></div>
+<div class="paragraph"><p>And, a more extended usage is shown with the <tt>-h</tt> option:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ adhocr.sh -h
+
+*************************************************
+       adhocr : Ad-hoc Copy and Run
+                version 1.4
+*************************************************
+
+Usage: adhocr.sh [-p #max-processes] [-u username] [-k] -f filename-containing-systems \
+                [-l logging-directory] [-o output-directory] [-sudo] [-x|-nx] [-h] \
+                [-up|-dl] [-t timeout secs] -c "commands to execute"
+
+  -p #threads
+         Maximum number of concurrent processes running (in the background)
+        [optional - default is 10]
+  -u &lt;username&gt;
+         The user "username" should be part of the "se" group for executing sudo
+        [optional - default is gdha]
+  -k
+        keep the log directory with individual log files per system
+        [optional - default is remove]
+  -f &lt;filename&gt;
+        Filename containing list of systems to process [required]
+  -l &lt;logdir&gt;
+        Directory to keep the logs
+        [optional - default ~/logs]
+  -o &lt;outputdir&gt;
+        Directory to store output
+        [optional - default ~/output]
+  -sudo
+        Force remote commands to be executed via sudo
+        [optional - default NO]
+  -x|-expect
+        Use expect to login remotely (e.g. no SSH keys were exchanged)
+        [optional - default YES]
+  -npw|-nx|-bg
+        Use only SSH (without expect) to execute remote commands
+        [optional - default NO]
+  -up
+        Upload documents with scp (with expect -x or without expect -nx)
+        [optional - default NO]
+        The scp default is to upload documents (use -dl to download documents)
+  -dl
+        Download documents with scp (default with expect, use -nx to use scp only)
+  -t &lt;seconds&gt;
+        timeout in seconds [optional - default 900]
+  -h
+        Show extended usage (this screen)
+  -c &lt;command(s)&gt;
+        Commands to execute on remote system(s), e.g. "uname -r" [required]
+        Note 1: upload copy (-up) commands are "local-file remote-file"
+        Note 2: download copy (-dl) commands are "remote-file local-file"</tt></pre>
+</div></div>
+<h3 id="_using_adhocr_as_mass_copy_tool">Using adhocr as mass copy tool</h3><div style="clear:left"></div>
+<div class="paragraph"><p>We can use the adhocr command to copy files to many systems at once, e.g.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ adhocr -f ./yy -up -c  "/home/gdhaese1/bin/daily_disk_scan.sh bin/"</tt></pre>
+</div></div>
+<div class="paragraph"><p>The above command (notice the <tt>-up</tt> option of upload) will copy the local file <tt>/home/gdhaese1/bin/daily_disk_scan.sh</tt> to all the systems listed in file <tt>./yy</tt> to the remote location <tt>bin/</tt> of user $USER (yourself when <tt>-u</tt> option is not given).
+Suppose in file yy we listed 800 systems then we better increase the limit of the maximum processes to run in parallel from the default 10 to something like 30 to speed up the copy process. Another handy option to change is the timeout (option <tt>-t</tt>), which is by default 900 seconds, to decrease this to something like 20 seconds.</p></div>
+<div class="paragraph"><p>To download use option <tt>-dl</tt>, is very similar, but in the command option <tt>-c</tt> we mention first the remote location of the file and then the local location.
+For example to copy a script using expect and scp to all known HP-UX 11.11 based systems with a time-out of maximum 30 seconds and maximum 30 parallelized processes in the background:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ adhocr -p 30 -t 30 -f systems/HPUX1111-systems -up -c "/home/gdhaese1/HPSIM/HPUX-Upgrade-RSP.sh  bin/"</tt></pre>
+</div></div>
+<h3 id="_using_adhocr_to_query_simple_things">Using adhocr to query simple things</h3><div style="clear:left"></div>
+<div class="paragraph"><p>We can use the adhocr command to retrieve simple information from a bunch of systems, e.g. the release of the Operating System:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ adhocr -f ./yy -c  "uname -r"
+$ cat /home/HPL3usr/work/output/adhocr-2011-05-19.171419.output
+BEGIN HOST ##### hpx189.company.com #####
+spawn ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no gdhaese1@hpx189.company.com uname -r
+########################################################################
+########################################################################
+
+B.11.31
+Execution time on host hpx189.company.com was 2 seconds
+END HOST ##### hpx189.company.com #####</tt></pre>
+</div></div>
+<h3 id="_adhocr_explained_by_example">Adhocr explained by example</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The best way to demonstrate the power of adhocr is by some simple examples. Suppose we have a limited list of HP-UX systems from which information needs to be extracted as e.g. the version(s) of System fault Management software installed. Therefore, we first create a file which contains the Fully Qualified Domain Names of these systems. E.g.</p></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2012-08-24 17:22:56 CEST
+</div>
+</div>
+</body>
+</html>
