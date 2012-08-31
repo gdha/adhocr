@@ -46,7 +46,7 @@ When dealing with user interaction, such as entering passwords, then the normal 
 
 The best way to see what minimal required options are with the +adhocr+ command is by running it without any option at all:
 
--------------------------------------------------
+<pre>
 $ adhocr
 
 *************************************************
@@ -61,13 +61,13 @@ Usage: adhocr [-p #max-processes] [-u username] [-k] -f filename-containing-syst
         -f filename containing list of systems to process
         -h show extended usage
         -c "command(s) to execute on remote systems"
--------------------------------------------------
+</pre>
 
 From above output we can tell that there are 2 required options, the +-f+ option, which is a file containing fully qualified domain names of the systems we want to retrieve information of. And, the second required option is the +-c+ option, which contains the command to execute on the remote systems.
 
 And, a more extended usage is shown with the +-h+ option:
 
--------------------------------------------------
+<pre>
 $ adhocr.sh -h
 
 *************************************************
@@ -119,15 +119,15 @@ Usage: adhocr.sh [-p #max-processes] [-u username] [-k] -f filename-containing-s
         Commands to execute on remote system(s), e.g. "uname -r" [required]
         Note 1: upload copy (-up) commands are "local-file remote-file"
         Note 2: download copy (-dl) commands are "remote-file local-file"
--------------------------------------------------
+</pre>
 
 # Using adhocr as mass copy tool
 
 We can use the adhocr command to copy files to many systems at once, e.g.
 
--------------------------------------------------
+<pre>
 $ adhocr -f ./yy -up -c  "/home/gdhaese1/bin/daily_disk_scan.sh bin/"
--------------------------------------------------
+</pre>
 
 The above command (notice the +-up+ option of upload) will copy the local file +/home/gdhaese1/bin/daily_disk_scan.sh+ to all the systems listed in file +./yy+ to the remote location +bin/+ of user $USER (yourself when +-u+ option is not given).
 Suppose in file yy we listed 800 systems then we better increase the limit of the maximum processes to run in parallel from the default 10 to something like 30 to speed up the copy process. Another handy option to change is the timeout (option +-t+), which is by default 900 seconds, to decrease this to something like 20 seconds.
@@ -135,15 +135,15 @@ Suppose in file yy we listed 800 systems then we better increase the limit of th
 To download use option +-dl+, is very similar, but in the command option +-c+ we mention first the remote location of the file and then the local location.
 For example to copy a script using expect and scp to all known HP-UX 11.11 based systems with a time-out of maximum 30 seconds and maximum 30 parallelized processes in the background:
 
--------------------------------------------------
+<pre>
 $ adhocr -p 30 -t 30 -f systems/HPUX1111-systems -up -c "/home/gdhaese1/HPSIM/HPUX-Upgrade-RSP.sh  bin/"
--------------------------------------------------
+</pre>
 
 # Using adhocr to query simple things
 
 We can use the adhocr command to retrieve simple information from a bunch of systems, e.g. the release of the Operating System:
 
--------------------------------------------------
+<pre>
 $ adhocr -f ./yy -c  "uname -r"
 $ cat /home/HPL3usr/work/output/adhocr-2011-05-19.171419.output
 BEGIN HOST ##### hpx189.company.com #####
@@ -154,5 +154,5 @@ spawn ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no gdhaese1@hpx189.compa
 B.11.31
 Execution time on host hpx189.company.com was 2 seconds
 END HOST ##### hpx189.company.com #####
--------------------------------------------------
+</pre>
 
