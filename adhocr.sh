@@ -320,7 +320,7 @@ end-of-text
 }
 
 function check_user_part_of_se_group {
-	groups $1 2>/dev/null | awk -v RS=" " 'BEGIN {found=1} ($1 == "${SudoGroup}") {found=0} END {print found}'
+	groups $1 2>/dev/null | awk -v RS=" " 'BEGIN {found=1} ($1 = "${SudoGroup}") {found=0} END {print found}'
 }
 
 function Prompt_User_for_Password {
