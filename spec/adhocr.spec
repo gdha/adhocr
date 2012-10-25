@@ -1,6 +1,6 @@
 %define rpmrelease %{nil}
-%define companyname "Johnson \& Johnson"
-%define sudogroup "se"
+%define companyname "IT3 Consultants"
+%define sudogroup "wheel"
 
 Summary: A tool to run commands on multiple systems simultaneously using expect
 Name: adhocr
@@ -42,9 +42,15 @@ mkdir -vp \
         %{buildroot}%{_mandir}/man8 \
         %{buildroot}%{_bindir}
 
-# copy rear components into directories
+# copy adhocr components into directories
 cp -av doc/adhocr.8 %{buildroot}%{_mandir}/man8
 cp -av adhocr %{buildroot}%{_bindir}
+
+%post
+# check for /usr/bin/ksh on Linux (probably only /bin/ksh)
+if [ ! -f /usr/bin/ksh ] && [ -f /bin/ksh ]; then
+	ln -s /bin/ksh /usr/bin/ksh
+fi
 
 
 %clean
