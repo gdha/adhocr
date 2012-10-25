@@ -29,8 +29,8 @@
 ##############
 # The following 3 variables will be filled up through the Makefile (when used)
 Version=1.4
-CompanyName="Johnson & Johnson"
-SudoGroup="se"
+CompanyName="IT3 Consultants"
+SudoGroup="wheel"
 
 # start of local variables
 PATH=/bin:/usr/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/contrib/bin
@@ -542,7 +542,7 @@ function RunExpectSudo {
 	sleep 1 ;
 	set timeout 8 ;
 	expect {
-		\"*?assword:*\" {
+		\"*?assword*\" {
 			send -- \"\$password\\r\" ;
 			###expect -re \"\[\$@#:>] $\" ;
 			expect -re \"\[\$@#:>](.*)\" ;
