@@ -526,14 +526,6 @@ function RunExpectSudo {
 		expect -re \"\[\$@#>] $\"
 	}
 
-	#set timeout 5 
-	#expect  {
-	#	\"*?assword:*\" {
-	#		send -- \"\$password\\r\" ;
-	#		expect -re \"\[\$@#:>](.*)\" ;
-	#		##expect -re \"\[\$@#>] $\" ;
-	#		}
-	#}
 	send -- \"\\r\" ;	# send an additional CR before sending a real CMD (sometimes profile ask for a CR)
 	expect -re \"\[\$@#:>](.*)\" ;
 	##expect -re \"\[\$@#>] $\" ;
