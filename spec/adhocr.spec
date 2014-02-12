@@ -4,7 +4,7 @@
 
 Summary: A tool to run commands on multiple systems simultaneously using expect
 Name: adhocr
-Version: 1.4
+Version: 1.5
 Release: 1%{?rpmrelease}%{?dist}
 License: GPLv3
 Group: Applications/File
