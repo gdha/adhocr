@@ -220,9 +220,12 @@ function GenerateOutputFile {
 	if [ $err -gt 0 ]; then
 		_line | tee -a $LOGFILE $OUTPUTFILE
 		echo "Found $err error(s) in the $OUTPUTFILE file." | tee -a $LOGFILE $OUTPUTFILE
-		grep '::Error::' $OUTPUTFILE | tee -a $LOGFILE $OUTPUTFILE
+		#grep '::Error::' $OUTPUTFILE | tee -a $LOGFILE $OUTPUTFILE
+		grep '::Error::' $OUTPUTFILE > /tmp/xXxXxXxX.yYx
+		cat /tmp/xXxXxXxX.yYx | tee -a $LOGFILE $OUTPUTFILE
 		echo "Please investigate..." | tee -a $LOGFILE $OUTPUTFILE
 		_line | tee -a $LOGFILE $OUTPUTFILE
+		rm -f /tmp/xXxXxXxX.yYx
 	fi
 }
 
