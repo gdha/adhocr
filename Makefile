@@ -79,7 +79,7 @@ rewrite:
 shc:
 	@echo -e "\033[1m== Shell Compiling $(adhocr_source) ==\033[0;0m"
 	if test ! -x $(shc_bin) ; then \
-		@echo "Error: we need shc (http://www.datsi.fi.upm.es/~frosal/)" ; \
+		echo "Error: we need shc (http://www.datsi.fi.upm.es/~frosal/)" ; \
 		exit 1 ; \
 	fi
 

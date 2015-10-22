@@ -28,7 +28,7 @@
 # PARAMETERS #
 ##############
 # The following 3 variables will be filled up through the Makefile (when used)
-Version=1.4
+Version=1.5
 CompanyName="IT3 Consultants"
 SudoGroup="wheel"
 
